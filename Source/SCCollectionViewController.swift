@@ -1,18 +1,27 @@
+// Copyright (c) 2015 Benoit Layer
 //
-//  SCCollectionViewController.swift
-//  SCCollectionViewController
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
-//  Created by Benoit Layer on 24/04/2015.
-//  Copyright (c) 2015 Benoit Layer. All rights reserved.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 import UIKit
 
-let reuseIdentifier = "Cell"
-let headerReuseIdentifier = "Header"
-
 public
-class SCCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class SCCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     // Set the cell margin (spacing between lines, columns, and left/right borders of the collectionview). Default to 5
     public var cellMargin: CGFloat = 5
@@ -21,6 +30,34 @@ class SCCollectionViewController: UIViewController, UICollectionViewDelegate, UI
     // Set the base height for the header (height when not scaled up).
     public var headerBaseHeight: CGFloat = 170
     
+    /**
+    You must override this method to provide the number of cells to show below the header.
+    */
+    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        fatalError("You must override this dataSource method")
+    }
+    
+    /**
+    You must override this method to configure the header view as you like.
+    
+    :param: header The recycled UICollectionReusableView.
+    */
+    public func configureHeader(header: UICollectionReusableView) {
+        fatalError("You must override this method to configure the header view as you like.")
+    }
+    
+    /**
+    You must override this method to configure the cells to your convenience.
+    
+    :param: cell        The recycled UICollectionViewCell.
+    :param: indexPath   The corresponding indexPath.
+    */
+    public func configureCell(cell: UICollectionViewCell, indexPath: NSIndexPath) {
+        fatalError("You must override this method to configure the cells as you like.")
+    }
+    
+    private let reuseIdentifier = "Cell"
+    private let headerReuseIdentifier = "Header"
     private var growingHeader: UIView?
     private let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
     private let headerMask = UIView()
@@ -51,28 +88,26 @@ class SCCollectionViewController: UIViewController, UICollectionViewDelegate, UI
             unwrappedNavigationController.navigationBar.alpha = 0
         }
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "button_back"), style: .Plain, target: self, action: "back:")
-        
         headerMask.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(collectionView)
     }
     
-    func back(sender: UIButton) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.transitionCoordinator()?.animateAlongsideTransition({ (context) -> Void in
-            self.navigationController!.navigationBar.alpha = 0
-            }, completion: nil)
+        if let unwrappedNavigationController = self.navigationController {
+            self.transitionCoordinator()?.animateAlongsideTransition({ (context) -> Void in
+                unwrappedNavigationController.navigationBar.alpha = 0
+                }, completion: nil)
+        }
     }
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.transitionCoordinator()?.animateAlongsideTransition({ (context) -> Void in
-            self.navigationController!.navigationBar.alpha = 1
-            }, completion: nil)
+        if let unwrappedNavigationController = self.navigationController {
+            self.transitionCoordinator()?.animateAlongsideTransition({ (context) -> Void in
+                unwrappedNavigationController.navigationBar.alpha = 1
+                }, completion: nil)
+        }
     }
     
     override public func didReceiveMemoryWarning() {
@@ -85,18 +120,9 @@ class SCCollectionViewController: UIViewController, UICollectionViewDelegate, UI
         collectionView.frame = self.view.bounds
     }
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
     // MARK: UICollectionViewDelegateFlowLayout
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    
+    final public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let numColumns: CGFloat = 1
         let edgeInset = self.collectionView(collectionView, layout: collectionViewLayout, insetForSectionAtIndex: indexPath.section)
         let spacingLeft = edgeInset.left
@@ -105,59 +131,46 @@ class SCCollectionViewController: UIViewController, UICollectionViewDelegate, UI
         return CGSize(width: width, height: cellHeight)
     }
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    final public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: cellMargin, left: cellMargin, bottom: cellMargin, right: cellMargin)
     }
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    final public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return cellMargin
     }
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    final public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return cellMargin
+    }
+    
+    final public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: headerBaseHeight)
     }
     
     // MARK: UICollectionViewDataSource
     
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        //#warning Incomplete method implementation -- Return the number of sections
+    final public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //#warning Incomplete method implementation -- Return the number of items in the section
-        return 10
-    }
-    
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    final public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
         
         // Configure the cell
-        cell.backgroundColor = UIColor.lightGrayColor()
+        cell.backgroundColor = UIColor.clearColor()
+        configureCell(cell, indexPath: indexPath)
         return cell
     }
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: headerBaseHeight)
-    }
-    
-    public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    final public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         if (kind == UICollectionElementKindSectionHeader) {
             let supplementaryView: UICollectionReusableView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: headerReuseIdentifier, forIndexPath: indexPath) as! UICollectionReusableView
             
             growingHeader = supplementaryView as UIView
             growingHeader!.clipsToBounds = false
-            growingHeader!.backgroundColor = UIColor.lightGrayColor()
+            growingHeader!.backgroundColor = UIColor.clearColor()
             
-            var imageView: UIImageView? = supplementaryView.viewWithTag(0) as? UIImageView
-            if let unwrappedImageView = imageView {
-                
-            } else {
-                imageView = UIImageView(frame: supplementaryView.bounds)
-                imageView!.image = UIImage(named: "town")
-                supplementaryView.addSubview(imageView!)
-            }
+            configureHeader(supplementaryView)
             
             growingHeader!.maskView = headerMask
             adjustHeaderMaskWithScrollOffset(collectionView.contentOffset.y)
@@ -167,7 +180,7 @@ class SCCollectionViewController: UIViewController, UICollectionViewDelegate, UI
         return UICollectionReusableView()
     }
     
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
+    final public func scrollViewDidScroll(scrollView: UIScrollView) {
         if let unwrapperGrowingHeader = growingHeader {
             let scrollOffset = scrollView.contentOffset.y
             let scale = 1 + (min(0, scrollOffset * 0.011)) * (-1.0)
@@ -180,8 +193,10 @@ class SCCollectionViewController: UIViewController, UICollectionViewDelegate, UI
             unwrapperGrowingHeader.transform = transform
             adjustHeaderMaskWithScrollOffset(scrollOffset)
             
-            let barAlpha = max(0, min(1, (scrollOffset/80)))
-            self.navigationController?.navigationBar.alpha = barAlpha
+            if let unwrappedNavigationController = self.navigationController {
+                let barAlpha = max(0, min(1, (scrollOffset/80)))
+                unwrappedNavigationController.navigationBar.alpha = barAlpha
+            }
         }
     }
     
@@ -191,37 +206,4 @@ class SCCollectionViewController: UIViewController, UICollectionViewDelegate, UI
         // We set appropriate frame to clip the header
         headerMask.frame = CGRect(origin: CGPoint(x: 0, y: maskBottom.y - collectionView.bounds.size.height), size: collectionView.bounds.size)
     }
-    
-    
-    // MARK: UICollectionViewDelegate
-    
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return true
-    }
-    */
-    
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return true
-    }
-    */
-    
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return false
-    }
-    
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-    return false
-    }
-    
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
-    
 }

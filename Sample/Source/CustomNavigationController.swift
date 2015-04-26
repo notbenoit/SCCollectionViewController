@@ -18,14 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import UIKit
 
-//! Project version number for SCCollectionViewController.
-FOUNDATION_EXPORT double SCCollectionViewControllerVersionNumber;
-
-//! Project version string for SCCollectionViewController.
-FOUNDATION_EXPORT const unsigned char SCCollectionViewControllerVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <SCCollectionViewController/PublicHeader.h>
-
-
+class CustomNavigationController: UINavigationController {
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationBar.barTintColor = UIColor(red: 99.0/255, green: 95.0/255, blue: 95.0/255, alpha: 1.0)
+        self.navigationBar.backIndicatorImage = UIImage(named: "button_back")
+        self.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "button_back")
+    }
+}

@@ -5,6 +5,9 @@
       location = "group:LICENSE">
    </FileRef>
    <FileRef
+      location = "group:Sample/Sample.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:SCCollectionViewController.xcodeproj">
    </FileRef>
 </Workspace>
