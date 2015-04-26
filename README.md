@@ -1,7 +1,5 @@
 ![SCCollectionViewController](https://raw.githubusercontent.com/notbenoit/notbenoit.github.io/master/images/sccollectionviewcontroller/sccollectionviewcontroller.gif)
 
-[![Build Status](https://travis-ci.org/notbenoit/SCCollectionViewController.svg)](https://travis-ci.org/notbenoit/SCCollectionViewController)
-
 # SCCollectionViewController
 This framework provides a controller to subclass, which presents a UICollectionView with builtin  animations for a growing header (scale effect), a parallax effect, and a navigation bar background which fades in and out as you scroll through the UICollectionView.
 
