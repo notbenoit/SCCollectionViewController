@@ -19,11 +19,13 @@ CocoaPods 0.36 adds supports for Swift and embedded frameworks. You can install 
 $ gem install cocoapods
 ```
 
-To add `SCCollectionViewController` to your project, add this line to your  `Podfile`:
+To add `SCCollectionViewController` to your project, add this lines to your  `Podfile`:
 
 ```ruby
-pod 'SCCollectionViewController', '~> 1.0.0'
+use_frameworks!
+pod 'SCCollectionViewController', '~> 1.0'
 ```
+The flag `use_frameworks!` is used because this framework is entirely written in Swift, and generates a .framework file.
 
 ### Manual
 - Simply add the `SCCollectionViewController.xcodeproj` to your workspace and add its framework output as a dependency of your project (see the Sample project).
