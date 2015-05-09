@@ -60,7 +60,7 @@ class SCCollectionViewController: UIViewController, UICollectionViewDataSource, 
     private let headerReuseIdentifier = "Header"
     private var growingHeader: UIView?
     private let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
-    private let headerMask = UIView()
+    private let headerMask = CALayer()
     
     public override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
@@ -77,7 +77,7 @@ class SCCollectionViewController: UIViewController, UICollectionViewDataSource, 
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.frame = self.view.bounds
-        collectionView.backgroundColor = UIColor.whiteColor()
+        collectionView.backgroundColor = UIColor.clearColor()
         collectionView.clipsToBounds = false
         
         // Let the scrollview go under navigationBar.
@@ -88,7 +88,7 @@ class SCCollectionViewController: UIViewController, UICollectionViewDataSource, 
             unwrappedNavigationController.navigationBar.alpha = 0
         }
         
-        headerMask.backgroundColor = UIColor.whiteColor()
+        headerMask.backgroundColor = UIColor(white: 1, alpha: 1).CGColor
         self.view.addSubview(collectionView)
     }
     
@@ -172,7 +172,7 @@ class SCCollectionViewController: UIViewController, UICollectionViewDataSource, 
             
             configureHeader(supplementaryView)
             
-            growingHeader!.maskView = headerMask
+            growingHeader!.layer.mask = headerMask
             adjustHeaderMaskWithScrollOffset(collectionView.contentOffset.y)
             
             return supplementaryView
@@ -204,6 +204,9 @@ class SCCollectionViewController: UIViewController, UICollectionViewDataSource, 
         // Find bottom of header without growing effect
         let maskBottom = self.view.convertPoint(CGPoint(x: 0, y: headerBaseHeight-offset), toView: growingHeader)
         // We set appropriate frame to clip the header
-        headerMask.frame = CGRect(origin: CGPoint(x: 0, y: maskBottom.y - collectionView.bounds.size.height), size: collectionView.bounds.size)
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        headerMask.frame = CGRectMake(0, 0, collectionView.bounds.size.width, maskBottom.y)
+        CATransaction.commit()
     }
 }
