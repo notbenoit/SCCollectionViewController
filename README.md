@@ -5,7 +5,7 @@ This framework provides a controller to subclass, which presents a UICollectionV
 
 ## Requirements
 
-- iOS 8.0+
+- iOS 7.0+ (do not use cocoapods for iOS before 8, since cocoapods forces Swift frameworks to have a iOS8 deployment target)
 - Xcode 6.3 (Usage of Swift 1.2)
 
 ## Installation
@@ -65,6 +65,8 @@ You can set the class of the navigation bar directly in your nib or storyboard f
 Right now, the SCCollectionViewController is made for a single section in the UICollectionView.
 
 ## Changelog
+### 1.0.1
+Used the mask property on CALayer instead of the mnew maskView property of UIView in order to be run on iOS7.0+.
 
 ### 1.0.0
 Initial version
