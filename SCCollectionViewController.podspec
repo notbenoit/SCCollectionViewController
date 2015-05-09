@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'SCCollectionViewController'
-  s.version = '1.0.0'
+  s.version = '1.0.1'
   s.license = 'MIT'
   s.summary = 'A controller presenting a collection view with out of the box effects, like parallax, growing header, and a fading navigation bar.'
   s.homepage = 'https://github.com/notbenoit/SCCollectionViewController'
