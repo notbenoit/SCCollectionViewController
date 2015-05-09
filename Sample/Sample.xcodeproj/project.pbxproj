@@ -7,16 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC160D041AFE5CD000B8FE6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCD358521AEC5BA3005F3188 /* Main.storyboard */; };
+		FC160D051AFE5CD300B8FE6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCD358501AEC5BA3005F3188 /* LaunchScreen.xib */; };
+		FC9C25611AFE59DE00FC6A97 /* SCCollectionViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD358671AEC5D33005F3188 /* SCCollectionViewController.framework */; };
+		FC9C25621AFE59DE00FC6A97 /* SCCollectionViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FCD358671AEC5D33005F3188 /* SCCollectionViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FCD358571AEC5BA3005F3188 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3584F1AEC5BA3005F3188 /* AppDelegate.swift */; };
-		FCD358581AEC5BA3005F3188 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCD358501AEC5BA3005F3188 /* LaunchScreen.xib */; };
-		FCD358591AEC5BA3005F3188 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCD358521AEC5BA3005F3188 /* Main.storyboard */; };
 		FCD3585A1AEC5BA3005F3188 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD358541AEC5BA3005F3188 /* Images.xcassets */; };
 		FCD3585E1AEC5BFA005F3188 /* SubclassExampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3585D1AEC5BFA005F3188 /* SubclassExampleController.swift */; };
 		FCD3586C1AEC5E26005F3188 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3586B1AEC5E26005F3188 /* CustomNavigationController.swift */; };
-		FCD3586D1AED039C005F3188 /* SCCollectionViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD358671AEC5D33005F3188 /* SCCollectionViewController.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FC9C25631AFE59DE00FC6A97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FCD358621AEC5D33005F3188 /* SCCollectionViewController.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FCD357F41AEC5585005F3188;
+			remoteInfo = SCCollectionViewController;
+		};
 		FCD358661AEC5D33005F3188 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FCD358621AEC5D33005F3188 /* SCCollectionViewController.xcodeproj */;
@@ -32,6 +40,20 @@
 			remoteInfo = SCCollectionViewController;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FC9C25651AFE59DE00FC6A97 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FC9C25621AFE59DE00FC6A97 /* SCCollectionViewController.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		FCD358231AEC5A31005F3188 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCD3586D1AED039C005F3188 /* SCCollectionViewController.framework in Frameworks */,
+				FC9C25611AFE59DE00FC6A97 /* SCCollectionViewController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,11 +128,13 @@
 				FCD3581F1AEC5A31005F3188 /* Sources */,
 				FCD358201AEC5A31005F3188 /* Frameworks */,
 				FCD358211AEC5A31005F3188 /* Resources */,
+				FC9C25651AFE59DE00FC6A97 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				FCD358691AEC5D38005F3188 /* PBXTargetDependency */,
+				FC9C25641AFE59DE00FC6A97 /* PBXTargetDependency */,
 			);
 			name = Sample;
 			productName = Sample;
@@ -170,9 +194,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC160D051AFE5CD300B8FE6C /* LaunchScreen.xib in Resources */,
+				FC160D041AFE5CD000B8FE6C /* Main.storyboard in Resources */,
 				FCD3585A1AEC5BA3005F3188 /* Images.xcassets in Resources */,
-				FCD358581AEC5BA3005F3188 /* LaunchScreen.xib in Resources */,
-				FCD358591AEC5BA3005F3188 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +216,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		FC9C25641AFE59DE00FC6A97 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SCCollectionViewController;
+			targetProxy = FC9C25631AFE59DE00FC6A97 /* PBXContainerItemProxy */;
+		};
 		FCD358691AEC5D38005F3188 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SCCollectionViewController;
@@ -306,7 +335,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Source/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos8.1;
@@ -319,7 +348,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Source/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos8.1;
